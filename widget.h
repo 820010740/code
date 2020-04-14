@@ -1,8 +1,8 @@
 #ifndef WIDGET_H
 #define WIDGET_H
-
 #include <QWidget>
 #include <QTcpSocket>
+#include <QTcpServer>
 #include<QList>
 #include<QTimer>
 namespace Ui {
@@ -17,26 +17,28 @@ public:
     explicit Widget(QWidget *parent = nullptr);
     ~Widget();
 public slots:
+    void onNewConnection();
 
     void onReadyRead();
     void onConnected();
     void onDisconnectd();
     void onError(QAbstractSocket::SocketError socketError);
+
 private slots:
-    void on_btnSend_5_clicked();
+    void on_btnSend_clicked();
 
-    void on_btnImage_5_clicked();
+    void on_btnImage_clicked();
 
-    void on_btnFile_5_clicked();
+    void on_btnFile_clicked();
 
 private:
     Ui::Widget *ui;
-    QTcpSocket tcpSocket;
+    QTcpServer sever;
+    QList<QTcpSocket*>clients;
+
     int imageIndex;
-    QString fileName; //文件名字
-
-    qint32 sizePackLast;
-
+    QString fileName;
+    quint32 sizePackLast;
 
 
 };
